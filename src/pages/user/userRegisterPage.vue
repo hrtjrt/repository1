@@ -88,15 +88,19 @@ if (formState.userPassword != formState.checkPassword) {
     message.error('两次输入的密码不一致');
     return;
 }
-  const res = await userRegister(values)
-  if (res.data.code === 0 && res.data.data) {
-    message.success("注册成功");
-    router.push({
-      path:"/user/login",
-      replace:true,
-    })
-  } else{
-    message.error('注册失败' + res.data.description);
+  try {
+    const res = await userRegister(values);
+    if (res.data?.code === 0 && res.data.data) {
+      message.success("注册成功");
+      router.push({
+        path: "/user/login",
+        replace: true,
+      });
+    } else {
+      message.error('注册失败' + (res.data?.description ?? ''));
+    }
+  } catch (e) {
+    message.error('注册失败：后端服务未启动或网络异常');
   }
 };
 

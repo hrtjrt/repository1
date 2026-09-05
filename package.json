@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --port=3000",
+    "mock": "json-server db.json --port 8080 --middlewares ./mock/middleware.js",
+    "mock:watch": "json-server db.json --port 8080 --middlewares ./mock/middleware.js --watch",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -28,6 +30,7 @@
     "@vue/eslint-config-typescript": "^9.1.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "json-server": "^0.17.4",
     "typescript": "~4.5.5"
   },
   "eslintConfig": {

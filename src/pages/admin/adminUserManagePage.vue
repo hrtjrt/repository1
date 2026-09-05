@@ -48,11 +48,15 @@ const doDelete = async (id: string) => {
   if (!id) {
     return;
   }
-  const res = await deleteUser(id);
-  if (res.data.code === 0) {
-    message.success("删除成功");
-  } else {
-    message.error("删除失败");
+  try {
+    const res = await deleteUser(id);
+    if (res.data?.code === 0) {
+      message.success("删除成功");
+    } else {
+      message.error("删除失败");
+    }
+  } catch (e) {
+    message.error("删除失败：后端服务未启动或网络异常");
   }
 };
 
@@ -96,11 +100,15 @@ const data = ref([]);
 
 // 获取数据
 const fetchData = async (username = "") => {
-  const res = await searchUsers(username);
-  if (res.data.data) {
-    data.value = res.data.data;
-  } else {
-    message.error("获取数据失败");
+  try {
+    const res = await searchUsers(username);
+    if (res.data?.data) {
+      data.value = res.data.data;
+    } else {
+      message.error("获取数据失败");
+    }
+  } catch (e) {
+    message.error("获取数据失败：后端服务未启动或网络异常");
   }
 };
 

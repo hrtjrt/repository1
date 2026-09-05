@@ -70,16 +70,20 @@ const router = useRouter();
 const loginUserStore = userLoginUserStore();
 // 表单提交
 const handleSubmit = async (values: any) => {
-  const res = await userLogin(values)
-  if (res.data.code === 0 && res.data.data) {
-    await loginUserStore.fetchLoginUser();
-    message.success("登陆成功");
-    router.push({
-      path:"/",
-      replace:true,
-    })
-  } else{
-    message.error('登录失败');
+  try {
+    const res = await userLogin(values);
+    if (res.data?.code === 0 && res.data.data) {
+      await loginUserStore.fetchLoginUser();
+      message.success("登陆成功");
+      router.push({
+        path: "/",
+        replace: true,
+      });
+    } else {
+      message.error('登录失败');
+    }
+  } catch (e) {
+    message.error('登录失败：后端服务未启动或网络异常');
   }
   console.log('Success:', values);
 };
